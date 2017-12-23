@@ -5,7 +5,9 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-fontawesome": "^1.6.1",
     "react-scripts": "1.0.17",
+    "react-trigger-change": "^1.0.2",
     "styled-components": "^2.2.4"
   },
   "scripts": {
@@ -29,6 +31,7 @@
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.5.1",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "react-storybook-decorator-background": "^1.0.5"
   }
 }

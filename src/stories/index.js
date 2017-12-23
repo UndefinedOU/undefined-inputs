@@ -2,12 +2,32 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
+import { BackgroundColor } from 'react-storybook-decorator-background';
+import PlainInputDemo from './PlainInputDemo.js';
+import IconLabelInputDemo from './IconLabelInputDemo.js';
+import StepperDemo from './StepperDemo.js';
 
-import { Button, Welcome } from '@storybook/react/demo';
+const BackgroundDecorator = (story) => {
+  const style = {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
+    padding: 20
+  };
+  return (
+    <BackgroundColor colors={['#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#000000']} story={() => (
+      <section style={style}>
+        {story()}
+      </section>
+    )}/>
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+  );
+};
 
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
+storiesOf('Input', module)
+  .addDecorator(BackgroundDecorator)
+  .add('plain', () => <PlainInputDemo changedAction={action('changed')} />)
+  .add('icon label', () => <IconLabelInputDemo changedAction={action('changed')} />)
+  .add('stepper', () => <StepperDemo changedAction={action('changed')} />);
