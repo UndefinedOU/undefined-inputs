@@ -74,6 +74,17 @@ export default class PlainInputDemo extends PureComponent {
             onChange={this.handleTextChanged.bind(this, 'input5')}
           />
         </p>
+        <p>
+          disabled: <br/>
+          <Input
+            disabled
+            icon='rocket'
+            icon-position='end'
+            unit='%'
+            value='1234'
+            onChange={this.handleTextChanged.bind(this, 'input5')}
+          />
+        </p>
       </section>
     );
   }

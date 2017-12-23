@@ -15,6 +15,7 @@ const KEY_DOWN = 'ArrowDown';
 
 export default class Stepper extends PureComponent {
   static propTypes = {
+    disabled: PropTypes.bool,
     icon: PropTypes.string,
     'icon-position': PropTypes.oneOf(['start', 'end']),
     max: PropTypes.number,
@@ -142,6 +143,7 @@ export default class Stepper extends PureComponent {
 
   render () {
     const {
+      disabled,
       icon,
       'icon-position': iconPosition,
       transparent,
@@ -155,22 +157,23 @@ export default class Stepper extends PureComponent {
     return (
       <InputContainer
         transparent={transparent}
-        onMouseEnter={this.handleMouseEntered}
-        onMouseLeave={this.handleMouseLeft}
-        onKeyDownCapture={this.handleKeyPressed}
+        onMouseEnter={!disabled && this.handleMouseEntered}
+        onMouseLeave={!disabled && this.handleMouseLeft}
+        onKeyDownCapture={!disabled && this.handleKeyPressed}
       >
         {iconPosition !== 'end' && icon && <StyledStartIcon name={icon} />}
         <InputField
           {...padding}
-          transparent={transparent}
           {...restProps}
+          disabled={disabled}
           innerRef={this.bindInput}
+          transparent={transparent}
           type='text'
           value={`${value}` || '0'}
           onChange={this.handleTextChanged}
         />
-        {hovered && <StepperUp onClick={this.handleStepperUpClicked} />}
-        {hovered && <StepperDown onClick={this.handleStepperDownClicked} />}
+        {hovered && <StepperUp disabled={disabled} onClick={this.handleStepperUpClicked} />}
+        {hovered && <StepperDown disabled={disabled} onClick={this.handleStepperDownClicked} />}
         {iconPosition === 'end' && icon && !hovered && <StyledEndIcon name={icon} />}
       </InputContainer>
     );

@@ -72,11 +72,23 @@ export default class PlainInputDemo extends PureComponent {
         <p>
           with default value and unit: <br/>
           <Input
+            defaultValue='12'
             type='number'
             unit='$'
-            defaultValue='12'
             value={input5}
             onChange={this.handleTextChanged.bind(this, 'input5')}
+          />
+        </p>
+        <p>
+          disabled: <br/>
+          <Input
+            disabled
+            defaultValue='12'
+            icon='rocket'
+            icon-position='end'
+            type='number'
+            unit='$'
+            value='123'
           />
         </p>
       </section>
