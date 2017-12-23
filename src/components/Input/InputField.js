@@ -73,6 +73,7 @@ export default class InputField extends PureComponent {
 
   render () {
     const {
+      defaultValue,
       transparent,
       unit,
       value,

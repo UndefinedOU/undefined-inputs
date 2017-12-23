@@ -5,13 +5,11 @@ import 'font-awesome/css/font-awesome.css';
 import FontAwesome from 'react-fontawesome';
 
 export const InputContainer = styled.span`
-  background: #FFF;
-  border: 1px solid #EEE;
-  border-radius: 2px;
   height: 25px;
   display: inline-block;
   font-size: 12px;
   position: relative;
+  box-sizing: border-box;
   ${props => props.transparent && css`
     background: transparent;
     border: none;
@@ -19,8 +17,10 @@ export const InputContainer = styled.span`
 `;
 
 export const TextField = styled.input`
-  background: transparent;
-  border: none;
+  box-sizing: border-box;
+  border-radius: 2px;
+  border: 1px solid #EEE;
+  background: #FFF;
   padding-left: 5px;
   padding-right: 5px;
   height: 25px;
@@ -53,6 +53,7 @@ export const StyledEndIcon = styled(StyledIcon)`
 `;
 
 export const StepperUp = styled((props) => <button {...props}><FontAwesome name='caret-up'/></button>)`
+  box-sizing: border-box;
   position: absolute;
   line-height: 12px;
   font-size: 10px;
@@ -69,6 +70,7 @@ export const StepperUp = styled((props) => <button {...props}><FontAwesome name=
   outline: none;
 `;
 export const StepperDown = styled((props) => <button {...props}><FontAwesome name='caret-down'/></button>)`
+  box-sizing: border-box;
   position: absolute;
   line-height: 12px;
   font-size: 10px;
