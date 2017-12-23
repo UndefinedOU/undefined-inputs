@@ -10,10 +10,6 @@ export const InputContainer = styled.span`
   font-size: 12px;
   position: relative;
   box-sizing: border-box;
-  ${props => props.transparent && css`
-    background: transparent;
-    border: none;
-  `}
 `;
 
 export const TextField = styled.input`
@@ -28,6 +24,8 @@ export const TextField = styled.input`
     content: '%';
   }
   ${props => props.transparent && css`
+    background: transparent;
+    border: none;
     &:focus, &:active {
       outline: none;
     }

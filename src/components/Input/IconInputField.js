@@ -34,7 +34,7 @@ export default class Input extends PureComponent {
     // The styled icon is position absolute, we should add padding left or right to textfield.
     const padding = icon && { [iconPosition === 'end' ? 'paddingRight' : 'paddingLeft']: 20 };
     return (
-      <InputContainer transparent={transparent}>
+      <InputContainer>
         {iconPosition !== 'end' && icon && <StyledStartIcon name={icon} />}
         <InputField
           {...padding}

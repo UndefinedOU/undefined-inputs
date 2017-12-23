@@ -156,7 +156,6 @@ export default class Stepper extends PureComponent {
 
     return (
       <InputContainer
-        transparent={transparent}
         onMouseEnter={disabled ? null : this.handleMouseEntered}
         onMouseLeave={disabled ? null : this.handleMouseLeft}
         onKeyDownCapture={!disabled ? null : this.handleKeyPressed}
