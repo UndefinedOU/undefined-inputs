@@ -12,6 +12,7 @@ import InputField from './InputField';
 
 const KEY_UP = 'ArrowUp';
 const KEY_DOWN = 'ArrowDown';
+const PIXEL_TO_VALUE_RATIO = 5;
 
 export default class Stepper extends PureComponent {
   static propTypes = {
@@ -73,6 +74,14 @@ export default class Stepper extends PureComponent {
     triggerReactChangeEvent(this.input);
   }
 
+  addValue = (inc) => {
+    const { max, min } = this.props;
+    const { value } = this.state;
+    let nextValue = parseFloat((+value + inc).toFixed(14));
+    nextValue = nextValue > max ? max : (nextValue < min ? min : nextValue);
+    nextValue !== value && this.setState({ value: nextValue }, this.triggerChangeEvent);
+  }
+
   handleMouseEntered = (evt) => {
     this.setState({ hovered: true });
   }
@@ -80,33 +89,59 @@ export default class Stepper extends PureComponent {
   handleMouseLeft = (evt) => {
     this.setState({ hovered: false });
   }
+  // Note: this is native event at body not react event.
+  handleMouseMove = (evt) => {
+    // use mouseY - pageY for having move up for increasing and down for decreasing.
+    const diffY = this.mouseDownY - evt.pageY;
+    // It is important to round the value becaues it may have decimals.
+    const valueDiff = Math.round(diffY / PIXEL_TO_VALUE_RATIO);
+    if (valueDiff) {
+      // only set value when the value is not 0
+      this.addValue(valueDiff * this.mouseDownStepSize);
+      this.mouseDownY = evt.pageY;
+    }
+  }
 
-  handleStepperUpClicked = (evt) => {
+  handleMouseDown = (evt) => {
     const {
-      max,
       step,
       'step-big': stepBig,
       'step-small': stepSmall
     } = this.props;
-    const { value } = this.state;
-    const inc = evt.shiftKey ? stepBig : (evt.altKey ? stepSmall : step);
-    let nextValue = parseFloat((+value + inc).toFixed(14));
-    nextValue = nextValue > max ? max : nextValue;
-    nextValue !== value && this.setState({ value: nextValue }, this.triggerChangeEvent);
+
+    // We should keep the value at state because we have to use native event to handle the movement.
+    this.mouseDownY = evt.pageY;
+    this.mouseDownStepSize = evt.shiftKey ? stepBig : (evt.altKey ? stepSmall : step);
+    // We need to put event listener at body to get the mousemove events which are
+    // out of this components.
+    document.body.addEventListener('mousemove', this.handleMouseMove);
+    document.body.addEventListener('mouseup', this.handleMouseUp);
+    document.body.addEventListener('mouseleave', this.handleMouseUp);
+  }
+  // Note: this is native event at body not react event.
+  handleMouseUp = (evt) => {
+    document.body.removeEventListener('mousemove', this.handleMouseMove);
+    document.body.removeEventListener('mouseup', this.handleMouseUp);
+    document.body.removeEventListener('mouseleave', this.handleMouseUp);
+  }
+
+  handleStepperUpClicked = (evt) => {
+    const {
+      step,
+      'step-big': stepBig,
+      'step-small': stepSmall
+    } = this.props;
+
+    this.addValue(evt.shiftKey ? stepBig : (evt.altKey ? stepSmall : step));
   }
 
   handleStepperDownClicked = (evt) => {
     const {
-      min,
       step,
       'step-big': stepBig,
       'step-small': stepSmall
     } = this.props;
-    const { value } = this.state;
-    const inc = evt.shiftKey ? stepBig : (evt.altKey ? stepSmall : step);
-    let nextValue = parseFloat((+value - inc).toFixed(14));
-    nextValue = nextValue < min ? min : nextValue;
-    nextValue !== value && this.setState({ value: nextValue }, this.triggerChangeEvent);
+    this.addValue(evt.shiftKey ? -stepBig : (evt.altKey ? -stepSmall : -step));
   }
 
   handleTextChanged = (value) => {
@@ -127,7 +162,6 @@ export default class Stepper extends PureComponent {
   }
 
   handleKeyPressed = (evt) => {
-    console.log('key down', evt.key);
     switch (evt.key) {
       case KEY_UP:
         this.handleStepperUpClicked(evt);
@@ -159,6 +193,7 @@ export default class Stepper extends PureComponent {
       <InputContainer
         onMouseEnter={disabled ? null : this.handleMouseEntered}
         onMouseLeave={disabled ? null : this.handleMouseLeft}
+        onMouseDownCapture={disabled ? null : this.handleMouseDown}
         onKeyDownCapture={disabled ? null : this.handleKeyPressed}
       >
         {iconPosition !== 'end' && icon && <StyledStartIcon name={icon} />}
