@@ -13,6 +13,7 @@ import InputField from './InputField';
 const KEY_UP = 'ArrowUp';
 const KEY_DOWN = 'ArrowDown';
 const PIXEL_TO_VALUE_RATIO = 5;
+const MOUSE_DOWN_INTERVAL = 100;
 
 export default class Stepper extends PureComponent {
   static propTypes = {
@@ -121,6 +122,7 @@ export default class Stepper extends PureComponent {
   }
   // Note: this is native event at body not react event.
   handleMouseUp = (evt) => {
+    console.log('mouseup', evt.type, evt.target, evt.currentTarget);
     document.body.removeEventListener('mousemove', this.handleMouseMove, true);
     document.body.removeEventListener('mouseup', this.handleMouseUp, true);
     document.body.removeEventListener('mouseleave', this.handleMouseUp);
@@ -143,6 +145,28 @@ export default class Stepper extends PureComponent {
       'step-small': stepSmall
     } = this.props;
     this.addValue(evt.shiftKey ? -stepBig : (evt.altKey ? -stepSmall : -step));
+  }
+
+  handleStepperUpMouseDown = (evt) => {
+    evt.persist();
+    this.StepperUpInterval = setInterval(() => {
+      this.handleStepperUpClicked(evt);
+    }, MOUSE_DOWN_INTERVAL);
+  }
+
+  handleStepperUpMouseUp = (evt) => {
+    clearInterval(this.StepperUpInterval);
+  }
+
+  handleStepperDownMouseDown = (evt) => {
+    evt.persist();
+    this.StepperDownInterval = setInterval(() => {
+      this.handleStepperDownClicked(evt);
+    }, MOUSE_DOWN_INTERVAL);
+  }
+
+  handleStepperDownMouseUp = (evt) => {
+    clearInterval(this.StepperDownInterval);
   }
 
   handleTextChanged = (value) => {
@@ -208,8 +232,22 @@ export default class Stepper extends PureComponent {
           value={`${value}`}
           onChange={this.handleTextChanged}
         />
-        {hovered && <StepperUp disabled={disabled} onClick={this.handleStepperUpClicked} />}
-        {hovered && <StepperDown disabled={disabled} onClick={this.handleStepperDownClicked} />}
+        {hovered &&
+          <StepperUp
+            disabled={disabled}
+            onMouseDown={this.handleStepperUpMouseDown}
+            onMouseUp={this.handleStepperUpMouseUp}
+            onMouseLeave={this.handleStepperUpMouseUp}
+          />
+        }
+        {hovered &&
+          <StepperDown
+            disabled={disabled}
+            onMouseDown={this.handleStepperDownMouseDown}
+            onMouseUp={this.handleStepperDownMouseUp}
+            onMouseLeave={this.handleStepperDownMouseUp}
+          />
+        }
         {iconPosition === 'end' && icon && !hovered && <StyledEndIcon name={icon} />}
       </InputContainer>
     );

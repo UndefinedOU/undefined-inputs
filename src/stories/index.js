@@ -21,6 +21,16 @@ const BackgroundDecorator = (story) => {
   return (
     <BackgroundColor colors={['#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#000000']} story={() => (
       <section style={style}>
+        <style>
+          {`
+            html, body, #root {
+              width: 100%;
+              height: 100%;
+              padding: 0;
+              margin: 0;
+            }
+          `}
+        </style>
         {story()}
       </section>
     )}/>
