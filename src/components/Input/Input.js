@@ -8,7 +8,7 @@ export default class Input extends PureComponent {
     type: PropTypes.string
   };
 
-  static defaultTypes = {
+  static defaultProps = {
     type: 'text'
   };
 
