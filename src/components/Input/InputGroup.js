@@ -65,9 +65,7 @@ export default class InputGroup extends PureComponent {
           ...child.props,
           style: {
             ...child.props.style,
-            width: `${width}px`,
-            // flex can also help us to let last child has all sub-pixels.
-            flex: index === children.length - 1 ? '1 1 auto' : '0 0 auto'
+            width: `${width}px`
           }
         };
 
