@@ -26,9 +26,38 @@ export default class InputGroup extends PureComponent {
     this.forceUpdate();
   }
 
+  layoutVertically = (children, iconCount) => {
+    return children.map((child, index) => (
+      React.cloneElement(child, {
+        ...child.props,
+        style: {
+          ...child.props.style,
+          width: '100%'
+        }
+      })
+    ));
+  }
+
+  layoutHorizontally = (children, iconCount) => {
+    const containerWidth = parseFloat(window.getComputedStyle(this.container).width);
+    const widthForSingle = (containerWidth - iconCount * 15) / children.length;
+    return children.map((child, index) => {
+      const width = widthForSingle + (child.props.icon ? 15 : 0);
+      const newProps = {
+        ...child.props,
+        style: {
+          ...child.props.style,
+          width: `${width}px`
+        }
+      };
+
+      return React.cloneElement(child, newProps);
+    });
+  }
+
   getAcceptableChildren = () => {
     if (!this.container) {
-      return;
+      return null;
     }
     const { direction } = this.props;
 
@@ -43,35 +72,12 @@ export default class InputGroup extends PureComponent {
 
     if (!children.length) {
       // no acceptable children, we don't need to change the size.
-      return;
+      return null;
     }
 
-    if (direction === 'vertical') {
-      return children.map((child, index) => (
-        React.cloneElement(child, {
-          ...child.props,
-          style: {
-            ...child.props.style,
-            width: '100%'
-          }
-        })
-      ));
-    } else {
-      const containerWidth = parseFloat(window.getComputedStyle(this.container).width);
-      const widthForSingle = (containerWidth - iconCount * 15) / children.length;
-      return children.map((child, index) => {
-        const width = widthForSingle + (child.props.icon ? 15 : 0);
-        const newProps = {
-          ...child.props,
-          style: {
-            ...child.props.style,
-            width: `${width}px`
-          }
-        };
-
-        return React.cloneElement(child, newProps);
-      });
-    }
+    return (direction === 'vertical')
+      ? this.layoutVertically(children, iconCount)
+      : this.layoutVertically(children, iconCount);
   }
 
   render () {
