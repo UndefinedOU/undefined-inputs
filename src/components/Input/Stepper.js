@@ -111,7 +111,7 @@ export default class Stepper extends PureComponent {
 
   handleTextChanged = (value) => {
     // to correct the decimal point
-    const formatedValue = value.substr(-1, 1) === '.' ? (value + '0') : value;
+    const formatedValue = value.substr(-1, 1) === '.' || value === '-' ? (value + '0') : value;
     if (isNaN(+formatedValue)) {
       // eats the non-numeric input event.
       return;
@@ -127,6 +127,7 @@ export default class Stepper extends PureComponent {
   }
 
   handleKeyPressed = (evt) => {
+    console.log('key down', evt.key);
     switch (evt.key) {
       case KEY_UP:
         this.handleStepperUpClicked(evt);
@@ -158,7 +159,7 @@ export default class Stepper extends PureComponent {
       <InputContainer
         onMouseEnter={disabled ? null : this.handleMouseEntered}
         onMouseLeave={disabled ? null : this.handleMouseLeft}
-        onKeyDownCapture={!disabled ? null : this.handleKeyPressed}
+        onKeyDownCapture={disabled ? null : this.handleKeyPressed}
       >
         {iconPosition !== 'end' && icon && <StyledStartIcon name={icon} />}
         <InputField
@@ -168,7 +169,7 @@ export default class Stepper extends PureComponent {
           innerRef={this.bindInput}
           transparent={transparent}
           type='text'
-          value={`${value}` || '0'}
+          value={`${value}`}
           onChange={this.handleTextChanged}
         />
         {hovered && <StepperUp disabled={disabled} onClick={this.handleStepperUpClicked} />}

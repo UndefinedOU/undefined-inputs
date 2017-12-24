@@ -33,7 +33,7 @@ export default class PlainInputDemo extends PureComponent {
           <Input
             type='number'
             max={10}
-            min={0}
+            min={-10}
             value={input1}
             onChange={this.handleTextChanged.bind(this, 'input1')}
           />
