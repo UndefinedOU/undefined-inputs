@@ -14,7 +14,7 @@ export default class InputGroup extends PureComponent {
     direction: PropTypes.oneOf(['horizontal', 'vertical'])
   };
 
-  static defaultTypes = {
+  static defaultProps = {
     direction: 'horizontal'
   };
 

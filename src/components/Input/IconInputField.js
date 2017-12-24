@@ -7,7 +7,7 @@ import {
 } from './StyledComponents.js';
 import InputField from './InputField';
 
-export default class Input extends PureComponent {
+export default class IconInputField extends PureComponent {
   static propTypes = {
     icon: PropTypes.string,
     'icon-position': PropTypes.oneOf(['start', 'end']),
@@ -18,8 +18,8 @@ export default class Input extends PureComponent {
     onChange: PropTypes.func
   };
 
-  static defaultTypes = {
-    'icon-position': 'start', // this doesn't work but we still set it
+  static defaultProps = {
+    'icon-position': 'start',
     value: ''
   };
 
@@ -35,7 +35,7 @@ export default class Input extends PureComponent {
     const padding = icon && { [iconPosition === 'end' ? 'paddingRight' : 'paddingLeft']: 20 };
     return (
       <InputContainer>
-        {iconPosition !== 'end' && icon && <StyledStartIcon name={icon} />}
+        {iconPosition === 'start' && icon && <StyledStartIcon name={icon} />}
         <InputField
           {...padding}
           transparent={transparent}

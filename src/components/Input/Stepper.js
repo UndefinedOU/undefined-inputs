@@ -31,11 +31,12 @@ export default class Stepper extends PureComponent {
   };
 
   static defaultProps = {
+    'icon-position': 'start',
     max: 100,
     min: 0,
     step: 1,
-    'step-big': 10, // this doesn't work but we still set it
-    'step-small': 0.1, // this doesn't work but we still set it
+    'step-big': 10,
+    'step-small': 0.1,
     value: 0
   };
 
@@ -196,7 +197,7 @@ export default class Stepper extends PureComponent {
         onMouseDownCapture={disabled ? null : this.handleMouseDown}
         onKeyDownCapture={disabled ? null : this.handleKeyPressed}
       >
-        {iconPosition !== 'end' && icon && <StyledStartIcon name={icon} />}
+        {iconPosition === 'start' && icon && <StyledStartIcon name={icon} />}
         <InputField
           {...padding}
           {...restProps}

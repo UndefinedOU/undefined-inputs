@@ -13,12 +13,7 @@ export default class Input extends PureComponent {
   };
 
   render () {
-    const {
-      type,
-      ...restProps
-    } = this.props;
-    const InputComponent = type === 'number' ? Stepper : IconInputField;
-
-    return (<InputComponent {...restProps} />);
+    const InputComponent = this.props.type === 'number' ? Stepper : IconInputField;
+    return (<InputComponent {...this.props} />);
   }
 }

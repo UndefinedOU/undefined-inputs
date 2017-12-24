@@ -16,7 +16,7 @@ export default class InputField extends PureComponent {
     onKeyUp: PropTypes.func
   };
 
-  static defaultTypes = {
+  static defaultProps = {
     defaultValue: '',
     value: ''
   };
