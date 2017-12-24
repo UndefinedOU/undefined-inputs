@@ -194,7 +194,7 @@ export default class Stepper extends PureComponent {
       <InputContainer
         onMouseEnter={disabled ? null : this.handleMouseEntered}
         onMouseLeave={disabled ? null : this.handleMouseLeft}
-        onMouseDownCapture={disabled ? null : this.handleMouseDown}
+        onMouseDown={disabled ? null : this.handleMouseDown}
         onKeyDownCapture={disabled ? null : this.handleKeyPressed}
       >
         {iconPosition === 'start' && icon && <StyledStartIcon name={icon} />}
