@@ -26,7 +26,7 @@ export default class InputGroupDemo extends PureComponent {
     return (
       <section>
         <div>
-          normal: <br/>
+          5 children with 2 illegal elements: <br/>
           <InputGroup>
             <label>1234</label>
             <Input
@@ -47,6 +47,52 @@ export default class InputGroupDemo extends PureComponent {
               onChange={this.handleTextChanged.bind(this, 'input1')}
             />
             <button>abcdefg</button>
+          </InputGroup>
+        </div>
+        <hr/>
+        <div>
+          fixed size (400px): <br/>
+          <InputGroup style={{width: '400px'}}>
+            <Input
+              icon='heart'
+              value={input1}
+              onChange={this.handleTextChanged.bind(this, 'input1')}
+            />
+            <Input
+              type='number'
+              max={10}
+              min={0}
+              value={input2}
+              onChange={this.handleTextChanged.bind(this, 'input2')}
+            />
+            <Input
+              icon='heart'
+              value={input1}
+              onChange={this.handleTextChanged.bind(this, 'input1')}
+            />
+          </InputGroup>
+        </div>
+        <hr/>
+        <div>
+          dynamic size (60%): <br/>
+          <InputGroup style={{width: '60%'}}>
+            <Input
+              icon='heart'
+              value={input1}
+              onChange={this.handleTextChanged.bind(this, 'input1')}
+            />
+            <Input
+              type='number'
+              max={10}
+              min={0}
+              value={input2}
+              onChange={this.handleTextChanged.bind(this, 'input2')}
+            />
+            <Input
+              icon='heart'
+              value={input1}
+              onChange={this.handleTextChanged.bind(this, 'input1')}
+            />
           </InputGroup>
         </div>
       </section>

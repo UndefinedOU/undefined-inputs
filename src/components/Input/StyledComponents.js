@@ -84,3 +84,7 @@ export const StepperDown = styled((props) => <button {...props}><FontAwesome nam
   appearance: none;
   outline: none;
 `;
+
+export const InputGroupContainer = styled.div`
+  display: flex;
+`;

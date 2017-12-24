@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactResizeDetector from 'react-resize-detector';
-import Input from './Input';
+import { InputGroupContainer } from './StyledComponents.js';
+import Input from './Input.js';
 
 export default class InputGroup extends PureComponent {
   static propTypes = {
@@ -16,44 +17,20 @@ export default class InputGroup extends PureComponent {
     direction: 'horizontal'
   };
 
-  constructor (props) {
-    super(props);
-    this.state = {
-      containerWidth: null
-    };
-  }
-
-  componentDidMount () {
-    this.calcContainerWidth();
-  }
-
-  componentDidUpdate () {
-    this.calcContainerWidth();
-  }
-
   bindContainer = (container) => {
     this.container = container;
-  }
-
-  calcContainerWidth = () => {
-    if (!this.container) {
-      return;
-    }
-    const style = getComputedStyle(this.container);
-    const containerWidth = this.container.clientWidth -
-      parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-    this.setState({ containerWidth });
+    this.forceUpdate();
   }
 
   handleResized = () => {
-    this.calcContainerWidth();
+    this.forceUpdate();
   }
 
   getAcceptableChildren = () => {
-    const { containerWidth } = this.state;
-    if (!containerWidth) {
+    if (!this.container) {
       return;
     }
+    const containerWidth = parseFloat(window.getComputedStyle(this.container).width);
 
     let iconCount = 0;
     const children = React.Children.toArray(this.props.children).reduce((acc, child) => {
@@ -70,12 +47,15 @@ export default class InputGroup extends PureComponent {
     }
 
     const widthForSingle = (containerWidth - iconCount * 15) / children.length;
-    return children.map((child) => {
+    return children.map((child, index) => {
+      const width = widthForSingle + (child.props.icon ? 15 : 0);
       const newProps = {
         ...child.props,
         style: {
           ...child.props.style,
-          width: `${widthForSingle + (child.props.icon ? 15 : 0)}px`
+          width: `${width}px`,
+          // flex can also help us to let last child has all sub-pixels.
+          flex: index === children.length - 1 ? '1 1 auto' : '0 0 auto'
         }
       };
 
@@ -85,10 +65,10 @@ export default class InputGroup extends PureComponent {
 
   render () {
     return (
-      <div {...this.props} ref={this.bindContainer}>
+      <InputGroupContainer {...this.props} innerRef={this.bindContainer}>
         {this.getAcceptableChildren()}
         <ReactResizeDetector handleWidth onResize={this.handleResized} />
-      </div>
+      </InputGroupContainer>
     );
   }
 }
