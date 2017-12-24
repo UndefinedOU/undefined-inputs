@@ -78,7 +78,7 @@ export default class Stepper extends PureComponent {
   addValue = (inc) => {
     const { max, min } = this.props;
     const { value } = this.state;
-    let nextValue = parseFloat((+value + inc).toFixed(14));
+    let nextValue = parseFloat((+value + inc).toFixed(10));
     nextValue = nextValue > max ? max : (nextValue < min ? min : nextValue);
     nextValue !== value && this.setState({ value: nextValue }, this.triggerChangeEvent);
   }
@@ -115,14 +115,14 @@ export default class Stepper extends PureComponent {
     this.mouseDownStepSize = evt.shiftKey ? stepBig : (evt.altKey ? stepSmall : step);
     // We need to put event listener at body to get the mousemove events which are
     // out of this components.
-    document.body.addEventListener('mousemove', this.handleMouseMove);
-    document.body.addEventListener('mouseup', this.handleMouseUp);
+    document.body.addEventListener('mousemove', this.handleMouseMove, true);
+    document.body.addEventListener('mouseup', this.handleMouseUp, true);
     document.body.addEventListener('mouseleave', this.handleMouseUp);
   }
   // Note: this is native event at body not react event.
   handleMouseUp = (evt) => {
-    document.body.removeEventListener('mousemove', this.handleMouseMove);
-    document.body.removeEventListener('mouseup', this.handleMouseUp);
+    document.body.removeEventListener('mousemove', this.handleMouseMove, true);
+    document.body.removeEventListener('mouseup', this.handleMouseUp, true);
     document.body.removeEventListener('mouseleave', this.handleMouseUp);
   }
 
