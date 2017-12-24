@@ -87,4 +87,5 @@ export const StepperDown = styled((props) => <button {...props}><FontAwesome nam
 
 export const InputGroupContainer = styled.div`
   display: flex;
+   ${props => props.direction === 'vertical' && css`flex-direction: column`}
 `;

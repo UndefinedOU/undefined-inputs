@@ -95,6 +95,52 @@ export default class InputGroupDemo extends PureComponent {
             />
           </InputGroup>
         </div>
+        <hr/>
+        <div>
+          vertical, fixed size (400px): <br/>
+          <InputGroup direction='vertical' style={{width: '400px'}}>
+            <Input
+              icon='heart'
+              value={input1}
+              onChange={this.handleTextChanged.bind(this, 'input1')}
+            />
+            <Input
+              type='number'
+              max={10}
+              min={0}
+              value={input2}
+              onChange={this.handleTextChanged.bind(this, 'input2')}
+            />
+            <Input
+              icon='heart'
+              value={input1}
+              onChange={this.handleTextChanged.bind(this, 'input1')}
+            />
+          </InputGroup>
+        </div>
+        <hr/>
+        <div>
+          vertical, dynamic size (60%): <br/>
+          <InputGroup direction='vertical' style={{width: '60%'}}>
+            <Input
+              icon='heart'
+              value={input1}
+              onChange={this.handleTextChanged.bind(this, 'input1')}
+            />
+            <Input
+              type='number'
+              max={10}
+              min={0}
+              value={input2}
+              onChange={this.handleTextChanged.bind(this, 'input2')}
+            />
+            <Input
+              icon='heart'
+              value={input1}
+              onChange={this.handleTextChanged.bind(this, 'input1')}
+            />
+          </InputGroup>
+        </div>
       </section>
     );
   }

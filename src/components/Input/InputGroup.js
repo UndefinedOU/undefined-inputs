@@ -30,7 +30,7 @@ export default class InputGroup extends PureComponent {
     if (!this.container) {
       return;
     }
-    const containerWidth = parseFloat(window.getComputedStyle(this.container).width);
+    const { direction } = this.props;
 
     let iconCount = 0;
     const children = React.Children.toArray(this.props.children).reduce((acc, child) => {
@@ -46,21 +46,34 @@ export default class InputGroup extends PureComponent {
       return;
     }
 
-    const widthForSingle = (containerWidth - iconCount * 15) / children.length;
-    return children.map((child, index) => {
-      const width = widthForSingle + (child.props.icon ? 15 : 0);
-      const newProps = {
-        ...child.props,
-        style: {
-          ...child.props.style,
-          width: `${width}px`,
-          // flex can also help us to let last child has all sub-pixels.
-          flex: index === children.length - 1 ? '1 1 auto' : '0 0 auto'
-        }
-      };
+    if (direction === 'vertical') {
+      return children.map((child, index) => (
+        React.cloneElement(child, {
+          ...child.props,
+          style: {
+            ...child.props.style,
+            width: '100%'
+          }
+        })
+      ));
+    } else {
+      const containerWidth = parseFloat(window.getComputedStyle(this.container).width);
+      const widthForSingle = (containerWidth - iconCount * 15) / children.length;
+      return children.map((child, index) => {
+        const width = widthForSingle + (child.props.icon ? 15 : 0);
+        const newProps = {
+          ...child.props,
+          style: {
+            ...child.props.style,
+            width: `${width}px`,
+            // flex can also help us to let last child has all sub-pixels.
+            flex: index === children.length - 1 ? '1 1 auto' : '0 0 auto'
+          }
+        };
 
-      return React.cloneElement(child, newProps);
-    });
+        return React.cloneElement(child, newProps);
+      });
+    }
   }
 
   render () {
