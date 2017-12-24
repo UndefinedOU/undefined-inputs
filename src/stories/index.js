@@ -12,10 +12,10 @@ import InputAddonDemo from './InputAddonDemo.js';
 const BackgroundDecorator = (story) => {
   const style = {
     position: 'absolute',
-    top: '0',
-    left: '0',
-    right: '0',
-    bottom: '0',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     padding: 20
   };
   return (
