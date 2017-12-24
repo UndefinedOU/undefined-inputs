@@ -7,6 +7,7 @@ import PlainInputDemo from './PlainInputDemo.js';
 import IconLabelInputDemo from './IconLabelInputDemo.js';
 import StepperDemo from './StepperDemo.js';
 import InputGroupDemo from './InputGroupDemo.js';
+import InputAddonDemo from './InputAddonDemo.js';
 
 const BackgroundDecorator = (story) => {
   const style = {
@@ -32,4 +33,5 @@ storiesOf('Input', module)
   .add('plain', () => <PlainInputDemo changedAction={action('changed')} />)
   .add('icon label', () => <IconLabelInputDemo changedAction={action('changed')} />)
   .add('stepper', () => <StepperDemo changedAction={action('changed')} />)
-  .add('input group', () => <InputGroupDemo changedAction={action('changed')} />);
+  .add('input group', () => <InputGroupDemo changedAction={action('changed')} />)
+  .add('input group with addons', () => <InputAddonDemo changedAction={action('changed')} />);

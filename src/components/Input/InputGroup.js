@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactResizeDetector from 'react-resize-detector';
-import { InputGroupContainer } from './StyledComponents.js';
+import { InputGroupContainer, InputAddon } from './StyledComponents.js';
 import Input from './Input.js';
+import InputAddonGroup from './InputAddonGroup.js';
 
 export default class InputGroup extends PureComponent {
   static propTypes = {
@@ -17,6 +18,14 @@ export default class InputGroup extends PureComponent {
     direction: 'horizontal'
   };
 
+  constructor (props) {
+    super(props);
+    this.state = {
+      startGroupSize: 0,
+      endGroupSize: 0
+    };
+  }
+
   bindContainer = (container) => {
     this.container = container;
     this.forceUpdate();
@@ -26,10 +35,19 @@ export default class InputGroup extends PureComponent {
     this.forceUpdate();
   }
 
-  layoutVertically = (children, iconCount) => {
-    return children.map((child, index) => (
+  handleStartGroupResized = (size) => {
+    this.setState({ startGroupSize: size });
+  }
+
+  handleEndGroupResized = (size) => {
+    this.setState({ endGroupSize: size });
+  }
+
+  layoutVertically = (children, iconCount, addOnAtStart, addOnAtEnd) => {
+    return [...addOnAtStart, ...children, ...addOnAtEnd].map((child, index) => (
       React.cloneElement(child, {
         ...child.props,
+        key: child.props.key || `child-${index}`,
         style: {
           ...child.props.style,
           width: '100%'
@@ -38,46 +56,76 @@ export default class InputGroup extends PureComponent {
     ));
   }
 
-  layoutHorizontally = (children, iconCount) => {
+  layoutHorizontally = (children, iconCount, addOnAtStart, addOnAtEnd) => {
+    const { startGroupSize, endGroupSize } = this.state;
     const containerWidth = parseFloat(window.getComputedStyle(this.container).width);
-    const widthForSingle = (containerWidth - iconCount * 15) / children.length;
-    return children.map((child, index) => {
-      const width = widthForSingle + (child.props.icon ? 15 : 0);
-      const newProps = {
-        ...child.props,
-        style: {
-          ...child.props.style,
-          width: `${width}px`
-        }
-      };
+    const spaceForInputs = containerWidth -
+      (addOnAtStart.length ? startGroupSize : 0) - // not need to take care the size if no children
+      (addOnAtEnd.length ? endGroupSize : 0); // not need to take care the size if no children
+    const inputSize = (spaceForInputs - iconCount * 15) / children.length;
+    const startGroup = !addOnAtStart.length ? null : (
+      <InputAddonGroup key='before-group' onResize={this.handleStartGroupResized}>
+        {addOnAtStart}
+      </InputAddonGroup>
+    );
+    const endGroup = !addOnAtEnd.length ? null : (
+      <InputAddonGroup key='after-group' onResize={this.handleEndGroupResized}>
+        {addOnAtEnd}
+      </InputAddonGroup>
+    );
+    return [
+      startGroup,
+      ...children.map((child, index) => {
+        const width = inputSize + (child.props.icon ? 15 : 0);
+        const newProps = {
+          ...child.props,
+          key: child.props.key || `child-${index}`,
+          style: {
+            ...child.props.style,
+            width: `${width}px`
+          }
+        };
 
-      return React.cloneElement(child, newProps);
-    });
+        return React.cloneElement(child, newProps);
+      }),
+      endGroup
+    ];
   }
 
   getAcceptableChildren = () => {
     if (!this.container) {
       return null;
     }
-    const { direction } = this.props;
+    const { children, direction } = this.props;
 
     let iconCount = 0;
-    const children = React.Children.toArray(this.props.children).reduce((acc, child) => {
-      if (child.type === Input) {
-        acc.push(child);
-        child.props.icon && iconCount++;
+    const addOnAtStart = [];
+    let addOnAtEnd = [];
+    const inputs = [];
+    React.Children.forEach(children, (child) => {
+      if (!child) {
+        return;
       }
-      return acc;
-    }, []);
 
-    if (!children.length) {
-      // no acceptable children, we don't need to change the size.
+      if (child.type === Input) {
+        inputs.push(child);
+        child.props.icon && iconCount++;
+        addOnAtEnd = [];
+      } else if (!inputs.length && child.type === InputAddon) {
+        addOnAtStart.push(child);
+      } else if (inputs.length && child.type === InputAddon) {
+        addOnAtEnd.push(child);
+      }
+    });
+
+    if (!inputs.length && !addOnAtStart.length && !addOnAtEnd.length) {
+      // no acceptable children, we don't need to render it.
       return null;
     }
 
     return (direction === 'vertical')
-      ? this.layoutVertically(children, iconCount)
-      : this.layoutVertically(children, iconCount);
+      ? this.layoutVertically(inputs, iconCount, addOnAtStart, addOnAtEnd)
+      : this.layoutHorizontally(inputs, iconCount, addOnAtStart, addOnAtEnd);
   }
 
   render () {

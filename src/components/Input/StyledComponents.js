@@ -89,3 +89,8 @@ export const InputGroupContainer = styled.div`
   display: flex;
    ${props => props.direction === 'vertical' && css`flex-direction: column`}
 `;
+// The addons
+export const InputAddon = styled.div`
+  display: inline-block;
+  flex: 0 0 auto;
+`;
