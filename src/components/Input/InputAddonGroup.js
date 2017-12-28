@@ -15,6 +15,7 @@ export default class InputAddonGroup extends PureComponent {
     this.container = container;
     this.forceUpdate(() => {
       const { onResize } = this.props;
+      // might be slow (might need request animation frame 2x to make sure FF & Chro)
       onResize && onResize(parseFloat(window.getComputedStyle(this.container).width));
     });
   }

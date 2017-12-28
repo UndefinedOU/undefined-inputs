@@ -82,7 +82,7 @@ export default class InputGroup extends PureComponent {
           key: child.props.key || `child-${index}`,
           style: {
             ...child.props.style,
-            width: `${width}px`
+            width: `${width}px` // if not FF&C, flex: '1 1 auto'
           }
         };
 

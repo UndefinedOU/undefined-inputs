@@ -122,7 +122,7 @@ export default class Stepper extends PureComponent {
   }
   // Note: this is native event at body not react event.
   handleMouseUp = (evt) => {
-    console.log('mouseup', evt.type, evt.target, evt.currentTarget);
+    // console.log('mouseup', evt.type, evt.target, evt.currentTarget);
     document.body.removeEventListener('mousemove', this.handleMouseMove, true);
     document.body.removeEventListener('mouseup', this.handleMouseUp, true);
     document.body.removeEventListener('mouseleave', this.handleMouseUp);
@@ -149,6 +149,7 @@ export default class Stepper extends PureComponent {
 
   handleStepperUpMouseDown = (evt) => {
     evt.persist();
+    // TODO: might need to add speed to this
     this.StepperUpInterval = setInterval(() => {
       this.handleStepperUpClicked(evt);
     }, MOUSE_DOWN_INTERVAL);
@@ -186,7 +187,8 @@ export default class Stepper extends PureComponent {
     this.props.onChange && this.props.onChange(value);
   }
 
-  handleKeyPressed = (evt) => {
+
+  handleKeyDown = (evt) => {
     switch (evt.key) {
       case KEY_UP:
         this.handleStepperUpClicked(evt);
@@ -219,7 +221,7 @@ export default class Stepper extends PureComponent {
         onMouseEnter={disabled ? null : this.handleMouseEntered}
         onMouseLeave={disabled ? null : this.handleMouseLeft}
         onMouseDown={disabled ? null : this.handleMouseDown}
-        onKeyDownCapture={disabled ? null : this.handleKeyPressed}
+        onKeyDownCapture={disabled ? null : this.handleKeyDown}
       >
         {iconPosition === 'start' && icon && <StyledStartIcon name={icon} />}
         <InputField

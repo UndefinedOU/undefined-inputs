@@ -23,12 +23,12 @@ export const TextField = styled.input`
   &:after {
     content: '%';
   }
+  &:focus, &:active {
+    outline: none;
+  }
   ${props => props.transparent && css`
     background: transparent;
     border: none;
-    &:focus, &:active {
-      outline: none;
-    }
   `}
   ${props => !_.isUndefined(props.paddingLeft) && css`padding-left: ${props.paddingLeft}px;`}
   ${props => !_.isUndefined(props.paddingRight) && css`padding-right: ${props.paddingRight}px;`}
