@@ -14,7 +14,8 @@ export default class PlainInputDemo extends PureComponent {
       input2: 'abcdefg',
       input3: '12345%',
       input4: '1',
-      input5: ''
+      input5: '',
+      input6: '45%',
     };
   }
 
@@ -24,7 +25,7 @@ export default class PlainInputDemo extends PureComponent {
   }
 
   render () {
-    const { input1, input2, input3, input4, input5 } = this.state;
+    const { input1, input2, input3, input4, input5, input6 } = this.state;
 
     return (
       <section>
@@ -55,12 +56,13 @@ export default class PlainInputDemo extends PureComponent {
           />
         </p>
         <p>
-          with default value and unit: <br/>
+          with default value and default unit <br/>
           <Input
             style={{ width: '200px' }}
             defaultValue='12'
             unit='%'
-            value={input4}
+            defaultUnit='%'
+            value={input6}
             onChange={this.handleTextChanged.bind(this, 'input4')}
           />
         </p>

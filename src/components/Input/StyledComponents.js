@@ -12,7 +12,7 @@ export const InputContainer = styled.span`
   box-sizing: border-box;
 `;
 
-export const TextField = styled.input`
+export const TextField = styled.input.attrs({spellCheck: false})`
   box-sizing: border-box;
   border-radius: 2px;
   border: 1px solid #EEE;

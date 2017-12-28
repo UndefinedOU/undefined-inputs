@@ -10,6 +10,7 @@ export default class InputField extends PureComponent {
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     transparent: PropTypes.bool,
     unit: PropTypes.string,
+    defaultUnit: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
@@ -63,12 +64,21 @@ export default class InputField extends PureComponent {
     const {
       defaultValue,
       onChange,
-      onBlur
+      onBlur,
+      defaultUnit,
+      unit,
     } = this.props;
 
-    const value = this.getUnformatedValue(evt.target.value);
-    !value && defaultValue && onChange && onChange(defaultValue);
-    onBlur && onBlur(evt);
+    // TODO: not working fix default unit display behavior
+    if (unit === defaultUnit) {
+      const value = this.getUnformatedValue(evt.target.value);
+      !value && defaultValue && onChange && onChange(getUnformatedValue(defaultValue));
+      onBlur && onBlur(evt);
+    } else {
+      const value = this.getUnformatedValue(evt.target.value);
+      !value && defaultValue && onChange && onChange(defaultValue);
+      onBlur && onBlur(evt);
+    }
   }
 
   render () {
