@@ -26,6 +26,13 @@ export const TextField = styled.input`
   &:focus, &:active {
     outline: none;
   }
+  ${props => props.disabled && css `
+    user-select: none !important;
+    cursor: default;
+    ::selection {
+      background: #FFF;
+    }
+  `}
   ${props => props.transparent && css`
     background: transparent;
     border: none;
