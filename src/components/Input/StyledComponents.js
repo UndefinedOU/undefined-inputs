@@ -5,21 +5,19 @@ import 'font-awesome/css/font-awesome.css';
 import FontAwesome from 'react-fontawesome';
 
 export const InputContainer = styled.span`
-  height: 25px;
   display: inline-block;
   font-size: 12px;
+  height: 100%;
   position: relative;
   box-sizing: border-box;
 `;
 
 export const TextField = styled.input.attrs({spellCheck: false})`
   box-sizing: border-box;
-  border-radius: 2px;
-  border: 1px solid #EEE;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
   background: #FFF;
-  padding-left: 5px;
-  padding-right: 5px;
-  height: 25px;
+  padding: 7px 6px;
   &:after {
     content: '%';
   }
@@ -44,15 +42,16 @@ export const TextField = styled.input.attrs({spellCheck: false})`
 const StyledIcon = styled(FontAwesome)`
   display: inline-block;
   width: 10px;
-  height: 25px;
-  line-height: 25px;
   font-size: 10px;
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 export const StyledStartIcon = styled(StyledIcon)`
   left: 5px;
 `;
+
 export const StyledEndIcon = styled(StyledIcon)`
   right: 5px;
 `;
