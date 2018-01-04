@@ -1,3 +1,9 @@
-export Input from './Input.js';
-export InputGroup from './InputGroup.js';
-export { InputAddon } from './StyledComponents.js';
+import Input from './Input.js';
+import InputGroup from './InputGroup.js';
+import { InputAddon } from './StyledComponents.js';
+
+export {
+  Input,
+  InputGroup,
+  InputAddon
+};
