@@ -22,7 +22,8 @@
     "storybook": "start-storybook -p 9009 -s public",
     "compile": "NODE_ENV=production babel src --out-dir dist --copy-files",
     "build-storybook": "build-storybook -s public",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run compile",
+    "preinstall": "npm run compile"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.17",
