@@ -7,7 +7,6 @@ import FontAwesome from 'react-fontawesome';
 export const InputContainer = styled.span`
   display: inline-block;
   font-size: 12px;
-  height: 100%;
   position: relative;
   box-sizing: border-box;
 `;
@@ -18,6 +17,7 @@ export const TextField = styled.input.attrs({spellCheck: false})`
   border: 1px solid #d9d9d9;
   background: #FFF;
   padding: 7px 6px;
+  height: 100%;
   &:after {
     content: '%';
   }
