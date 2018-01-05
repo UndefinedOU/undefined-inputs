@@ -120,8 +120,8 @@ Stepper.propTypes = {
 };
 Stepper.defaultProps = {
   'icon-position': 'start',
-  max: 100,
-  min: 0,
+  max: Number.POSITIVE_INFINITY,
+  min: Number.NEGATIVE_INFINITY,
   step: 1,
   'step-big': 10,
   'step-small': 0.1,
