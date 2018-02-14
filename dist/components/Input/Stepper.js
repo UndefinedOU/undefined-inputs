@@ -13,7 +13,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import triggerReactChangeEvent from 'react-trigger-change';
-import { InputContainer, StyledEndIcon, StyledStartIcon, StepperDown, StepperUp } from './StyledComponents.js';
+import { InputContainer, StyledEndIcon, StyledStartIcon, StepperDown, StepperUp, StepperWrapper } from './StyledComponents.js';
 import InputField from './InputField';
 
 var KEY_UP = 'ArrowUp';
@@ -84,18 +84,22 @@ var Stepper = function (_PureComponent) {
           value: '' + value,
           onChange: this.handleTextChanged
         })),
-        hovered && React.createElement(StepperUp, {
-          disabled: disabled,
-          onMouseDown: this.handleStepperUpMouseDown,
-          onMouseUp: this.handleStepperUpMouseUp,
-          onMouseLeave: this.handleStepperUpMouseUp
-        }),
-        hovered && React.createElement(StepperDown, {
-          disabled: disabled,
-          onMouseDown: this.handleStepperDownMouseDown,
-          onMouseUp: this.handleStepperDownMouseUp,
-          onMouseLeave: this.handleStepperDownMouseUp
-        }),
+        hovered && React.createElement(
+          StepperWrapper,
+          null,
+          React.createElement(StepperUp, {
+            disabled: disabled,
+            onMouseDown: this.handleStepperUpMouseDown,
+            onMouseUp: this.handleStepperUpMouseUp,
+            onMouseLeave: this.handleStepperUpMouseUp
+          }),
+          React.createElement(StepperDown, {
+            disabled: disabled,
+            onMouseDown: this.handleStepperDownMouseDown,
+            onMouseUp: this.handleStepperDownMouseUp,
+            onMouseLeave: this.handleStepperDownMouseUp
+          })
+        ),
         iconPosition === 'end' && icon && !hovered && React.createElement(StyledEndIcon, { name: icon })
       );
     }

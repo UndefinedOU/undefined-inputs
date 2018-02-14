@@ -6,7 +6,8 @@ import {
   StyledEndIcon,
   StyledStartIcon,
   StepperDown,
-  StepperUp
+  StepperUp,
+  StepperWrapper
 } from './StyledComponents.js';
 import InputField from './InputField';
 
@@ -235,20 +236,20 @@ export default class Stepper extends PureComponent {
           onChange={this.handleTextChanged}
         />
         {hovered &&
-          <StepperUp
-            disabled={disabled}
-            onMouseDown={this.handleStepperUpMouseDown}
-            onMouseUp={this.handleStepperUpMouseUp}
-            onMouseLeave={this.handleStepperUpMouseUp}
-          />
-        }
-        {hovered &&
-          <StepperDown
-            disabled={disabled}
-            onMouseDown={this.handleStepperDownMouseDown}
-            onMouseUp={this.handleStepperDownMouseUp}
-            onMouseLeave={this.handleStepperDownMouseUp}
-          />
+          <StepperWrapper>
+            <StepperUp
+              disabled={disabled}
+              onMouseDown={this.handleStepperUpMouseDown}
+              onMouseUp={this.handleStepperUpMouseUp}
+              onMouseLeave={this.handleStepperUpMouseUp}
+            />
+            <StepperDown
+              disabled={disabled}
+              onMouseDown={this.handleStepperDownMouseDown}
+              onMouseUp={this.handleStepperDownMouseUp}
+              onMouseLeave={this.handleStepperDownMouseUp}
+            />
+          </StepperWrapper>
         }
         {iconPosition === 'end' && icon && !hovered && <StyledEndIcon name={icon} />}
       </InputContainer>

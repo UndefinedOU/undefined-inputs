@@ -56,34 +56,31 @@ export const StyledEndIcon = styled(StyledIcon)`
   right: 5px;
 `;
 
-export const StepperUp = styled((props) => <button {...props}><FontAwesome name='caret-up'/></button>)`
-  box-sizing: border-box;
-  position: absolute;
-  line-height: 12px;
-  font-size: 10px;
+export const StepperWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 12px;
-  height: 12px;
-  top: 1px;
+  position: absolute;
   right: 0;
+  top: 0;
+  bottom: 0;
+`;
+
+export const StepperUp = styled((props) => <button {...props}><FontAwesome name='caret-up'/></button>)`
+  font-size: 10px;
   padding: 0;
-  border-radius: 2px;
+  border-radius: 2px 2px 0 0;
   text-align: center;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   outline: none;
+  border-bottom: 0;
 `;
 export const StepperDown = styled((props) => <button {...props}><FontAwesome name='caret-down'/></button>)`
-  box-sizing: border-box;
-  position: absolute;
-  line-height: 12px;
   font-size: 10px;
-  width: 12px;
-  height: 12px;
-  bottom: 1px;
-  right: 0;
   padding: 0;
-  border-radius: 2px;
+  border-radius: 0 0 2px 2px;
   text-align: center;
   -webkit-appearance: none;
   -moz-appearance: none;
